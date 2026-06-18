@@ -21,17 +21,18 @@
   --danger:#c0392b;
 }
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
-body::before{content:'';position:fixed;inset:0;background:
-  radial-gradient(ellipse 60% 40% at 10% 20%, rgba(144,238,144,0.08) 0%, transparent 60%),
-  radial-gradient(ellipse 50% 60% at 90% 80%, rgba(232,115,74,0.06) 0%, transparent 60%),
-  radial-gradient(ellipse 40% 30% at 50% 50%, rgba(135,206,235,0.05) 0%, transparent 70%);
-pointer-events:none;z-index:0}
+body{font-family:'DM Sans',sans-serif;background:#ede8dc;color:var(--text);min-height:100vh}
+body::before{content:'';position:fixed;inset:0;
+  background-image:url('https://www.transparenttextures.com/patterns/arabesque.png');
+  background-size:280px;
+  opacity:1;
+  mix-blend-mode:multiply;
+  pointer-events:none;z-index:0}
 .main{position:relative;z-index:1}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.hero{background:url('https://images.unsplash.com/photo-1544148103-0773bf10d330?w=1400&q=80') center center/cover no-repeat;padding:4rem 1.25rem 3.5rem;text-align:center;position:relative;overflow:hidden}
+.hero{background:url('https://images.unsplash.com/photo-1544148103-0773bf10d330?w=1400&q=80') center center/cover no-repeat;padding:5.5rem 1.25rem 4.5rem;text-align:center;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;
 background:rgba(0,0,0,0.35);
 pointer-events:none}
@@ -46,12 +47,37 @@ pointer-events:none}
 .admin-toggle-btn{position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,0.06);border:0.5px solid rgba(192,96,58,0.25);color:var(--text-light);font-size:11px;padding:6px 12px;border-radius:20px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;z-index:10}
 .admin-toggle-btn:hover{background:rgba(192,96,58,0.15);color:var(--primary-light)}
 
-.nav-wrap{background:rgba(26,90,53,0.97);backdrop-filter:blur(10px);position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(125,212,160,0.2)}
-.nav{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 0.5rem}
-.nav::-webkit-scrollbar{display:none}
+.nav-wrap{background:rgba(26,90,53,0.97);backdrop-filter:blur(10px);position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(125,212,160,0.2);display:flex;align-items:center;justify-content:space-between;padding:0 1rem}
+.nav{display:flex;align-items:center;gap:4px;padding:0.5rem 0}
 .nav-btn{flex-shrink:0;padding:0.9rem 1rem;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:color 0.2s,border-color 0.2s;white-space:nowrap}
 .nav-btn:hover{color:var(--cream)}
 .nav-btn.active{color:#7dd4a0;border-bottom-color:#7dd4a0}
+
+/* Dropdown nav */
+.cat-dropdown{position:relative}
+.cat-trigger{display:flex;align-items:center;gap:8px;padding:9px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(125,212,160,0.25);border-radius:30px;color:#f0faf4;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all 0.2s;white-space:nowrap;letter-spacing:0.04em}
+.cat-trigger:hover{background:rgba(255,255,255,0.14);border-color:rgba(125,212,160,0.5)}
+.cat-trigger .arrow{transition:transform 0.3s;font-size:10px;color:#7dd4a0}
+.cat-trigger.open .arrow{transform:rotate(180deg)}
+.cat-trigger .active-label{color:#7dd4a0;font-weight:600}
+.cat-menu{position:absolute;top:calc(100% + 10px);left:0;transform:scaleY(0.85);transform-origin:top left;background:rgba(15,40,25,0.97);backdrop-filter:blur(20px);border:1px solid rgba(125,212,160,0.2);border-radius:18px;padding:8px;min-width:220px;opacity:0;pointer-events:none;transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 20px 60px rgba(0,0,0,0.4);z-index:100}
+.cat-menu.open{opacity:1;pointer-events:all;transform:scaleY(1)}
+.cat-item{display:flex;align-items:center;gap:12px;width:100%;padding:10px 14px;background:none;border:none;border-radius:12px;color:rgba(240,250,244,0.75);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all 0.15s;text-align:left;letter-spacing:0.02em}
+.cat-item:hover{background:rgba(125,212,160,0.12);color:#f0faf4}
+.cat-item.active{background:rgba(125,212,160,0.18);color:#7dd4a0;font-weight:500}
+.cat-item .cat-icon{width:28px;height:28px;border-radius:8px;background:rgba(125,212,160,0.1);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.cat-item.active .cat-icon{background:rgba(125,212,160,0.2)}
+.cat-divider{height:1px;background:rgba(125,212,160,0.1);margin:6px 8px}
+@keyframes fanIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.cat-menu.open .cat-item{animation:fanIn 0.2s ease both}
+.cat-menu.open .cat-item:nth-child(1){animation-delay:0ms}
+.cat-menu.open .cat-item:nth-child(2){animation-delay:30ms}
+.cat-menu.open .cat-item:nth-child(3){animation-delay:60ms}
+.cat-menu.open .cat-item:nth-child(4){animation-delay:90ms}
+.cat-menu.open .cat-item:nth-child(5){animation-delay:120ms}
+.cat-menu.open .cat-item:nth-child(6){animation-delay:150ms}
+.cat-menu.open .cat-item:nth-child(7){animation-delay:180ms}
+.cat-menu.open .cat-item:nth-child(8){animation-delay:210ms}
 
 .main{max-width:1100px;margin:0 auto;padding:2rem 1rem 8rem}
 .section-header{display:flex;align-items:baseline;gap:0.75rem;margin-bottom:1.5rem}
@@ -186,20 +212,27 @@ footer span{color:#7dd4a0}
   <button class="admin-toggle-btn" id="adminToggleBtn" onclick="toggleAdminLogin()">⚙️ Admin</button>
   <p class="hero-eyebrow">✦ La Grande Maison ✦</p>
   <h1>La Grande <em>Maison</em></h1>
-  <p class="hero-sub">Premium tableware &amp; event rental — Seychelles 🌴</p>
+  <p class="hero-sub">Elevating your table, one event at a time</p>
   <div class="hero-divider"></div>
+  <p style="position:relative;z-index:2;font-size:13px;color:rgba(240,250,244,0.75);max-width:520px;margin:0 auto 1.75rem;line-height:1.8;font-weight:300;letter-spacing:0.02em">
+    Based in the Seychelles, La Grande Maison offers a curated collection of premium tableware, glassware and serving pieces — available for rental for your special occasions. From intimate dinners to grand celebrations, we bring elegance to every table.
+  </p>
   <div class="hero-tags">
-    <span class="hero-tag">Weddings</span>
-    <span class="hero-tag">Private events</span>
-    <span class="hero-tag">Corporate dining</span>
-    <span class="hero-tag">Celebrations</span>
+    <span class="hero-tag">🥂 Weddings</span>
+    <span class="hero-tag">🍽️ Private dining</span>
+    <span class="hero-tag">💼 Corporate events</span>
+    <span class="hero-tag">🎉 Celebrations</span>
+  </div>
+  <div style="position:relative;z-index:2;margin-top:1.75rem">
+    <a href="#catalogue" onclick="document.querySelector('.nav-wrap').scrollIntoView({behavior:'smooth'})" style="display:inline-block;padding:12px 28px;background:rgba(125,212,160,0.15);border:1px solid rgba(125,212,160,0.4);color:#f0faf4;border-radius:30px;font-size:13px;font-family:'DM Sans',sans-serif;text-decoration:none;letter-spacing:0.06em;transition:all 0.2s" onmouseover="this.style.background='rgba(125,212,160,0.3)'" onmouseout="this.style.background='rgba(125,212,160,0.15)'">Browse the catalogue ↓</a>
   </div>
 </div></section>
 
 <div class="nav-wrap">
   <nav class="nav" id="catNav">
-    <button class="nav-btn active" onclick="filter('all',this)">All items</button>
+    <!-- built by buildNav() -->
   </nav>
+  <button onclick="smoothScrollTo('about')" style="background:linear-gradient(135deg,rgba(125,212,160,0.15),rgba(125,212,160,0.08));border:1px solid rgba(125,212,160,0.35);font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#7dd4a0;cursor:pointer;padding:7px 18px;border-radius:30px;white-space:nowrap;transition:all 0.25s;font-weight:500" onmouseover="this.style.background='rgba(125,212,160,0.25)';this.style.borderColor='rgba(125,212,160,0.6)';this.style.color='#a8e6c1';this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 16px rgba(125,212,160,0.2)'" onmouseout="this.style.background='linear-gradient(135deg,rgba(125,212,160,0.15),rgba(125,212,160,0.08))';this.style.borderColor='rgba(125,212,160,0.35)';this.style.color='#7dd4a0';this.style.transform='translateY(0)';this.style.boxShadow='none'">✦ About</button>
 </div>
 
 <main class="main">
@@ -405,6 +438,11 @@ footer span{color:#7dd4a0}
         </div>
         <img id="imgPreview" class="form-img-preview" style="display:none;margin:0 auto" alt="Preview">
       </div>
+      <!-- Rotation controls -->
+      <div id="rotateControls" style="display:none;margin-top:10px;justify-content:center;gap:10px">
+        <button type="button" onclick="event.stopPropagation();rotateImage(-90)" style="padding:8px 16px;border-radius:8px;border:1px solid var(--cream-dark);background:white;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--text)">↺ Rotate Left</button>
+        <button type="button" onclick="event.stopPropagation();rotateImage(90)"  style="padding:8px 16px;border-radius:8px;border:1px solid var(--cream-dark);background:white;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--text)">↻ Rotate Right</button>
+      </div>
       <input type="file" id="fImgFile" accept="image/*" style="display:none" onchange="handleFileSelect(this.files[0])">
       <div id="uploadProgress" style="display:none;margin-top:8px">
         <div style="height:4px;background:var(--cream-dark);border-radius:2px;overflow:hidden">
@@ -421,6 +459,63 @@ footer span{color:#7dd4a0}
     <p class="save-status" id="saveStatus"></p>
   </div>
 </div>
+
+<!-- ABOUT SECTION -->
+<section id="about" style="background:var(--cream);padding:4rem 1.25rem;position:relative;z-index:1">
+  <div style="max-width:900px;margin:0 auto">
+
+    <!-- Header -->
+    <div style="text-align:center;margin-bottom:3rem">
+      <p style="font-size:10px;letter-spacing:0.3em;color:var(--primary);text-transform:uppercase;margin-bottom:0.75rem">Our story</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:400;color:var(--dark);margin-bottom:1rem">About <em style="font-style:italic;color:var(--coral)">La Grande Maison</em></h2>
+      <div style="width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--primary),transparent);margin:0 auto"></div>
+    </div>
+
+    <!-- Story + image -->
+    <div style="display:flex;gap:3rem;align-items:center;flex-wrap:wrap;margin-bottom:3.5rem">
+      <div style="flex:1;min-width:260px">
+        <p style="font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--dark);margin-bottom:1.25rem;line-height:1.6">"Every great occasion deserves a table worth remembering."</p>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.9;margin-bottom:1rem">
+          La Grande Maison was born from a passion for beautiful dining and a desire to make premium tableware accessible to everyone hosting special moments in the Seychelles. What started as a personal collection of carefully sourced pieces has grown into a full rental service trusted by private hosts, wedding planners and corporate clients alike.
+        </p>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.9">
+          Based in Mahé, we offer a curated selection of glassware, plates, cutlery, serving pieces and table accessories — each chosen for its quality, character and elegance. Whether you're hosting an intimate dinner for six or a grand celebration for hundreds, we'll help you set the scene.
+        </p>
+      </div>
+      <div style="flex:1;min-width:240px;max-width:380px">
+        <div style="border-radius:20px;overflow:hidden;box-shadow:0 8px 32px rgba(30,77,53,0.15);aspect-ratio:4/3">
+          <img src="https://images.unsplash.com/photo-1616137466211-f939a420be84?w=800&q=80" alt="Elegant table setting" style="width:100%;height:100%;object-fit:cover;display:block">
+        </div>
+      </div>
+    </div>
+
+    <!-- Values -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-bottom:3.5rem">
+      <div style="background:white;border-radius:16px;padding:1.5rem;border:1px solid rgba(46,139,87,0.1);box-shadow:0 2px 12px rgba(30,77,53,0.07);text-align:center">
+        <div style="font-size:32px;margin-bottom:0.75rem">🌿</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:var(--dark);margin-bottom:0.5rem">Curated Quality</h3>
+        <p style="font-size:12px;color:var(--text-light);line-height:1.7">Every piece in our collection is hand-picked for its elegance, durability and style. No compromise.</p>
+      </div>
+      <div style="background:white;border-radius:16px;padding:1.5rem;border:1px solid rgba(46,139,87,0.1);box-shadow:0 2px 12px rgba(30,77,53,0.07);text-align:center">
+        <div style="font-size:32px;margin-bottom:0.75rem">🤝</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:var(--dark);margin-bottom:0.5rem">Personal Service</h3>
+        <p style="font-size:12px;color:var(--text-light);line-height:1.7">We work closely with each client to make sure every detail is right — from selection to delivery and return.</p>
+      </div>
+      <div style="background:white;border-radius:16px;padding:1.5rem;border:1px solid rgba(46,139,87,0.1);box-shadow:0 2px 12px rgba(30,77,53,0.07);text-align:center">
+        <div style="font-size:32px;margin-bottom:0.75rem">🌴</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:var(--dark);margin-bottom:0.5rem">Local & Proud</h3>
+        <p style="font-size:12px;color:var(--text-light);line-height:1.7">Proudly based in the Seychelles, serving private homes, resorts and event venues across Mahé and beyond.</p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div style="text-align:center">
+      <p style="font-size:13px;color:var(--text-mid);margin-bottom:1.25rem">Ready to make your event unforgettable?</p>
+      <a href="https://wa.me/2482522112" target="_blank" style="display:inline-block;padding:13px 32px;background:var(--primary);color:white;border-radius:30px;font-size:13px;font-family:'DM Sans',sans-serif;text-decoration:none;font-weight:500;letter-spacing:0.04em;transition:background 0.2s" onmouseover="this.style.background='#236b43'" onmouseout="this.style.background='var(--primary)'">Get in touch →</a>
+    </div>
+
+  </div>
+</section>
 
 <!-- CONTACT SECTION -->
 <section style="background:linear-gradient(135deg,#0d3320,#1a4a2a);padding:3.5rem 1.25rem;text-align:center">
@@ -518,6 +613,15 @@ onSnapshot(q, snap => {
 });
 
 // ── Nav ───────────────────────────────────────────────────────────────────────
+const CAT_ICONS = {
+  'Plates':            '◯',
+  'Glasses':           '△',
+  'Cutlery':           '∥',
+  'Cups/saucer':       '◡',
+  'Cocktail/desserts': '◇',
+  'Accessoire/buffet': '□',
+};
+
 function buildNav() {
   const seen = new Map();
   allItems.forEach(i => {
@@ -528,16 +632,55 @@ function buildNav() {
   });
   const cats = [...seen.values()];
   const nav = document.getElementById('catNav');
-  nav.innerHTML = `<button class="nav-btn active" onclick="filter('all',this)">All items</button>`;
-  cats.forEach(cat => {
-    nav.innerHTML += `<button class="nav-btn" onclick="filter('${cat}',this)">${catLabels[cat]||cap(cat)}</button>`;
+
+  nav.innerHTML = `
+    <div class="cat-dropdown" id="catDropdown">
+      <button class="cat-trigger" id="catTrigger" onclick="toggleCatMenu()">
+        <span id="catTriggerLabel" class="active-label">All items</span>
+        <span class="arrow">▾</span>
+      </button>
+      <div class="cat-menu" id="catMenu">
+        <button class="cat-item active" id="cat-all" onclick="filter('all',this)">
+          <span class="cat-icon">✦</span> All items
+        </button>
+        <div class="cat-divider"></div>
+        ${cats.map(cat => `
+          <button class="cat-item" id="cat-${cat}" onclick="filter('${cat}',this)">
+            <span class="cat-icon">${CAT_ICONS[cat]||'▸'}</span> ${catLabels[cat]||cap(cat)}
+          </button>`).join('')}
+      </div>
+    </div>`;
+
+  // Close on outside click
+  document.addEventListener('click', e => {
+    if (!document.getElementById('catDropdown')?.contains(e.target)) closeCatMenu();
   });
+}
+
+function toggleCatMenu() {
+  const menu    = document.getElementById('catMenu');
+  const trigger = document.getElementById('catTrigger');
+  const isOpen  = menu.classList.contains('open');
+  if (isOpen) { closeCatMenu(); } else {
+    menu.classList.add('open');
+    trigger.classList.add('open');
+  }
+}
+
+function closeCatMenu() {
+  document.getElementById('catMenu')?.classList.remove('open');
+  document.getElementById('catTrigger')?.classList.remove('open');
 }
 
 function filter(cat, btn) {
   currentFilter = cat;
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  // Update active state
+  document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  // Update trigger label
+  const label = btn.textContent.trim();
+  document.getElementById('catTriggerLabel').textContent = label;
+  closeCatMenu();
   renderGrid();
 }
 
@@ -762,6 +905,8 @@ function openAdd() {
   ['fName','fDesc','fQty','fPrice','fReplacement','fImg'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('fCat').value = 'plates';
   document.getElementById('imgPreview').style.display = 'none';
+  document.getElementById('imgPreview').style.transform = 'rotate(0deg)';
+  document.getElementById('rotateControls').style.display = 'none';
   document.getElementById('uploadPlaceholder').style.display = 'block';
   document.getElementById('uploadProgress').style.display = 'none';
   document.getElementById('fImgFile').value = '';
@@ -787,7 +932,9 @@ function openEdit(firestoreId) {
   if (item.image) {
     document.getElementById('imgPreview').src = item.image;
     document.getElementById('imgPreview').style.display = 'block';
+    document.getElementById('imgPreview')._rotation = 0;
     document.getElementById('uploadPlaceholder').style.display = 'none';
+    document.getElementById('rotateControls').style.display = 'flex';
   } else {
     document.getElementById('imgPreview').style.display = 'none';
     document.getElementById('uploadPlaceholder').style.display = 'block';
@@ -859,17 +1006,47 @@ function handleDrop(e) {
 
 function handleFileSelect(file) {
   if (!file) return;
-  // Show local preview immediately
   const reader = new FileReader();
   reader.onload = e => {
     const p = document.getElementById('imgPreview');
     p.src = e.target.result;
     p.style.display = 'block';
+    p.style.transform = 'rotate(0deg)';
+    p._rotation = 0;
     document.getElementById('uploadPlaceholder').style.display = 'none';
+    document.getElementById('rotateControls').style.display = 'flex';
   };
   reader.readAsDataURL(file);
-  // Upload to Cloudinary
   uploadToCloudinary(file);
+}
+
+function rotateImage(deg) {
+  const p = document.getElementById('imgPreview');
+  if (!p.src || p.style.display === 'none') return;
+  p._rotation = (((p._rotation || 0) + deg) + 360) % 360;
+
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    const swap = p._rotation === 90 || p._rotation === 270;
+    const canvas = document.createElement('canvas');
+    canvas.width  = swap ? img.naturalHeight : img.naturalWidth;
+    canvas.height = swap ? img.naturalWidth  : img.naturalHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate((p._rotation * Math.PI) / 180);
+    ctx.drawImage(img, -img.naturalWidth / 2, -img.naturalHeight / 2);
+    canvas.toBlob(blob => {
+      const newUrl = URL.createObjectURL(blob);
+      p.src = newUrl;
+      p._rotation = 0; // reset since image itself is now rotated
+      const rotFile = new File([blob], 'rotated.jpg', { type: 'image/jpeg' });
+      document.getElementById('uploadStatusText').textContent = 'Uploading rotated image…';
+      document.getElementById('uploadProgress').style.display = 'block';
+      uploadToCloudinary(rotFile);
+    }, 'image/jpeg', 0.92);
+  };
+  img.src = p.src;
 }
 
 async function uploadToCloudinary(file) {
@@ -903,6 +1080,25 @@ async function uploadToCloudinary(file) {
     statusText.textContent = '❌ Upload failed: ' + e.message;
     bar.style.background = 'var(--danger)';
   }
+}
+
+function smoothScrollTo(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const target = el.getBoundingClientRect().top + window.pageYOffset - 60;
+  const start  = window.pageYOffset;
+  const dist   = target - start;
+  const dur    = 800;
+  let startTime = null;
+  function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+  function step(ts) {
+    if (!startTime) startTime = ts;
+    const elapsed = ts - startTime;
+    const pct = Math.min(elapsed / dur, 1);
+    window.scrollTo(0, start + dist * ease(pct));
+    if (elapsed < dur) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
 }
 
 document.getElementById('loginInput').addEventListener('keydown', e => {
@@ -984,7 +1180,7 @@ Object.assign(window, {
   sendOrder, closeConfirm, toggleAdminLogin, submitLogin,
   exitAdmin, openAdd, openEdit, closeItemForm, saveItem, deleteItem,
   handleDrop, handleFileSelect, selectDelivery, selectContact, proceedToForm,
-  renderAdminList
+  renderAdminList, rotateImage, toggleCatMenu, filter, smoothScrollTo
 });
 </script>
 </body>
