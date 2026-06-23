@@ -748,6 +748,7 @@ function openBasket() {
     const rows = entries.map(([id,qty]) => {
       const item = allItems.find(i=>i.firestoreId===id);
       if (!item) return '';
+      const maxQty = parseInt(item.qty) || 999;
       const line = (item.price||0) * qty;
       total += line;
       return `<div class="basket-item">
